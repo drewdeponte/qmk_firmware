@@ -28,6 +28,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD
 
+// Set TT layer switchig to only need two taps
+#define TAPPING_TOGGLE 2
+
 /* Use I2C or Serial, not both */
 #define USE_SERIAL
 //#define USE_I2C
