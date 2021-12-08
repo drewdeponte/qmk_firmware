@@ -7,14 +7,14 @@
 #define _MOTLR 2 // Motion Layer
 
 
-#define DD_CTLA CTL_T(DV_A)
-#define DD_OPTO OPT_T(DV_O)
-#define DD_SFTE SFT_T(DV_E)
-#define DD_CMDU CMD_T(DV_U)
-#define DD_CMDH CMD_T(DV_H)
-#define DD_SFTT SFT_T(DV_T)
-#define DD_OPTN OPT_T(DV_N)
-#define DD_CTLS CTL_T(DV_S)
+/* #define DD_CTLA CTL_T(DV_A) */
+/* #define DD_OPTO OPT_T(DV_O) */
+/* #define DD_SFTE SFT_T(DV_E) */
+/* #define DD_CMDU CMD_T(DV_U) */
+/* #define DD_CMDH CMD_T(DV_H) */
+/* #define DD_SFTT SFT_T(DV_T) */
+/* #define DD_OPTN OPT_T(DV_N) */
+/* #define DD_CTLS CTL_T(DV_S) */
 
 #define SFT_ESC  SFT_T(KC_ESC)
 #define CTL_BSPC CTL_T(KC_BSPC)
@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
     [_BASE] = LAYOUT(
         DV_QUOT, DV_COMM, DV_DOT,  DV_P,    DV_Y,                                         DV_F,    DV_G,    DV_C,    DV_R,    DV_L,
-        DD_CTLA, DD_OPTO, DD_SFTE, DD_CMDU, DV_I,                                         DV_D,    DD_CMDH, DD_SFTT, DD_OPTN, DD_CTLS,
+           DV_A,    DV_O,   DV_E,  DV_U,    DV_I,                                         DV_D,    DV_H,    DV_T,    DV_N,    DV_S,
         DV_SCLN, DV_Q,    DV_J,    DV_K,    DV_X,                                         DV_B,    DV_M,    DV_W,    DV_V,    DV_Z,
                           DV_LBRC, DV_RBRC,                                                        DV_MINS, DV_EQL,
                                                      SFT_ESC,  KC_SPC,  KC_ENT, SFT_BSPC,
