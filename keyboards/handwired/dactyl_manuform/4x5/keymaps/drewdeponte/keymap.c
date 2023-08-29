@@ -5,6 +5,7 @@
 #define _BASE 0
 #define _RAISE 1 // _RAISE
 #define _MOTLR 2 // Motion Layer
+#define _MACLR 3 // Macro Layer
 
 
 /* #define DD_CTLA CTL_T(DV_A) */
@@ -32,13 +33,17 @@
 #define KC_MB1 KC_MS_BTN1
 #define KC_MB2 KC_MS_BTN2
 
-#define SYMLR TT(_RAISE)
-#define MOTLR TT(_MOTLR)
+#define SYMLR MO(_RAISE)
+#define MOTLR MO(_MOTLR)
+#define MACLR MO(_MACLR)
 
 #define WIN1 LOPT(LCTL(LSFT(DV_1)))
 #define WIN2 LOPT(LCTL(LSFT(DV_2)))
 #define WIN3 LOPT(LCTL(LSFT(DV_3)))
 #define WIN4 LOPT(LCTL(LSFT(DV_4)))
+#define LAUNCHER LGUI(KC_SPC)
+#define JMPFWD LCTL(DV_I)
+#define JMPBCK LCTL(DV_O)
 #define COMNT LGUI(DV_SLSH)
 
 
@@ -60,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 *                                    '------+------' '------+------'
 *                                    |MOTLR |SYMLR | | SYMLR|  TAB |
 *                                    '------+------' '------+------'
-*                                    | CTRL | GUI  | | GUI  | ALT  |
+*                                    | CTRL | GUI  | | MACLR| ALT  |
 *                                    '------+------' '------+------'
 */
     [_BASE] = LAYOUT(
@@ -70,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           DV_LBRC, DV_RBRC,                                                        DV_MINS, DV_EQL,
                                                      SFT_ESC,  KC_SPC,  KC_ENT, SFT_BSPC,
                                                        SYMLR,  MOTLR,  KC_TAB, SYMLR,
-                                                     KC_LGUI, KC_LCTL,  KC_RALT, KC_RGUI
+                                                     KC_LGUI, KC_LCTL,  KC_RALT, MACLR
     ),
 
 /* Raise - SYMLR - Symbol Layer
@@ -128,6 +133,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______,                                      KC_VOLD,    WIN1,    WIN2,    WIN3,    WIN4,
                  _______, _______,                                                                          _______, _______,
                                    _______, _______,                                      _______, _______,
+                                                     _______, _______,  _______, _______,
+                                                     _______, _______,  _______, _______
+    ),
+
+/* MACLR - Macro Layer
+ * ,----------------------------------,                             ,----------------------------------,
+ * |      |      |      |      |      |                             |      |      |      |      |      |
+ * |------+------+------+------+------|                             |-------------+------+------+------|
+ * |      |      |      |      |      |                             |      |      |      |      |      |
+ * |------+------+------+------+------|                             |------|------+------+------+------|
+ * |      |      |      |      |      |                             |      |      |      |      |      |
+ * |------+------+------+-------------,                             ,-------------+------+------+------,
+ *        |      |      |                                                         |      |      |
+ *        '------+------'-------------'                             '-------------'------+------'
+ *                      |      |      |                             |      |      |
+ *                      |      |LNCHER|                             |      |      |
+ *                      |      |      |                             |      |      |
+ *                      '------+------'                             '------+------'
+ *                                    '------+------' '------+------'
+ *                                    |      |      | |      |      |
+ *                                    '------+------' '------+------'
+ *                                    |      |      | |      |      |
+ *                                    '------+------' '------+------'
+ */
+    [_MACLR] = LAYOUT(
+        _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______,
+        _______,  JMPBCK, _______, _______,  JMPFWD,                                      _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______,
+                 _______, _______,                                                                          _______, _______,
+                                   _______, LAUNCHER,                                      _______, _______,
                                                      _______, _______,  _______, _______,
                                                      _______, _______,  _______, _______
     ),
