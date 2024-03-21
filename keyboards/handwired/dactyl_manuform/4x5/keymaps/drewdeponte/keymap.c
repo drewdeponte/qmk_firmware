@@ -5,7 +5,8 @@
 #define _BASE 0
 #define _RAISE 1 // _RAISE
 #define _MOTLR 2 // Motion Layer
-#define _MACLR 3 // Macro Layer
+#define _LMODLR 3 // Left Modifier Layer
+#define _RMODLR 4 // Right Modifier Layer
 
 
 /* #define DD_CTLA CTL_T(DV_A) */
@@ -35,8 +36,20 @@
 
 #define SYMLR MO(_RAISE)
 #define MOTLR MO(_MOTLR)
-#define MACLR MO(_MACLR)
+#define LMODLR MO(_LMODLR)
+#define RMODLR MO(_RMODLR)
 
+#define LCTLSYM LM(_RAISE, MOD_LCTL)
+#define LALTSYM LM(_RAISE, MOD_LALT)
+#define LSFTSYM LM(_RAISE, MOD_LSFT)
+#define LGUISYM LM(_RAISE, MOD_LGUI)
+#define RCTLSYM LM(_RAISE, MOD_RCTL)
+#define RALTSYM LM(_RAISE, MOD_RALT)
+#define RSFTSYM LM(_RAISE, MOD_RSFT)
+#define RGUISYM LM(_RAISE, MOD_RGUI)
+
+/* I am not actively using any of the following currently. But I may want to go
+ * back to them so just keeping them here for a while. */
 #define WIN1 LOPT(LCTL(LSFT(DV_1)))
 #define WIN2 LOPT(LCTL(LSFT(DV_2)))
 #define WIN3 LOPT(LCTL(LSFT(DV_3)))
@@ -45,6 +58,7 @@
 #define JMPFWD LCTL(DV_I)
 #define JMPBCK LCTL(DV_O)
 #define COMNT LGUI(DV_SLSH)
+#define QUITAPP LGUI(DV_Q)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 *                                    '------+------' '------+------'
 *                                    |MOTLR |SYMLR | | SYMLR|  TAB |
 *                                    '------+------' '------+------'
-*                                    | CTRL | GUI  | | MACLR| ALT  |
+*                                    |MODLR | LCMD | | RCMD |MODLR |
 *                                    '------+------' '------+------'
 */
     [_BASE] = LAYOUT(
@@ -74,8 +88,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DV_SCLN, DV_Q,    DV_J,    DV_K,    DV_X,                                         DV_B,    DV_M,    DV_W,    DV_V,    DV_Z,
                           DV_LBRC, DV_RBRC,                                                        DV_MINS, DV_EQL,
                                                      SFT_ESC,  KC_SPC,  KC_ENT, SFT_BSPC,
-                                                       SYMLR,  MOTLR,  KC_TAB, SYMLR,
-                                                     KC_LGUI, KC_LCTL,  KC_RALT, MACLR
+                                                       SYMLR,  MOTLR,   KC_TAB, SYMLR,
+                                                      KC_LCMD, LMODLR,   RMODLR, KC_RCMD
     ),
 
 /* Raise - SYMLR - Symbol Layer
@@ -84,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|                             |-------------+------+------+------|
  * |  6   |  7   |  8   |  9   |  0   |                             |   ^  |  &   |  *   |  (   |  )   |
  * |------+------+------+------+------|                             |------|------+------+------+------|
- * |      |      |      |      |COMNT |                             |      |  /   |  \   |  ?   |  |   |
+ * |      |      |      |      |      |                             |      |  /   |  \   |  ?   |  |   |
  * |------+------+------+-------------,                             ,-------------+------+------+------,
  *        |      |      |                                                         |  `   |  ~   |
  *        '------+------'-------------'                             '-------------'------+------'
@@ -101,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT(
            DV_1,    DV_2,    DV_3,    DV_4,    DV_5,                                      DV_EXLM,   DV_AT, DV_HASH,  DV_DLR, DV_PERC,
            DV_6,    DV_7,    DV_8,    DV_9,    DV_0,                                      DV_CIRC, DV_AMPR, DV_ASTR, DV_LPRN, DV_RPRN,
-        _______, _______, _______, _______,   COMNT,                                      _______, DV_SLSH, DV_BSLS, DV_QUES, DV_PIPE,
+        _______, _______, _______, _______, _______,                                      _______, DV_SLSH, DV_BSLS, DV_QUES, DV_PIPE,
                  _______, _______,                                                                           DV_GRV, DV_TILD,
                                    _______, _______,                                      _______, _______,
                                                      _______, _______,  _______, _______,
@@ -113,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|                             |-------------+------+------+------|
  * |      |      |      |      |      |                             | MUTE | left | down |right | PgDn |
  * |------+------+------+------+------|                             |------|------+------+------+------|
- * |      |      |      |      |      |                             | VOL- | WIN1 | WIN2 | WIN3 | WIN4 |
+ * |      |      |      |      |      |                             | VOL- |      |      |      |      |
  * |------+------+------+-------------,                             ,-------------+------+------+------,
  *        |      |      |                                                         |      |      |
  *        '------+------'-------------'                             '-------------'------+------'
@@ -130,25 +144,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOTLR] = LAYOUT(
         _______, _______, _______, _______, _______,                                      KC_VOLU, _______, KC_UP,   _______, KC_PGUP,
         _______, _______, _______, _______, _______,                                      KC_MUTE, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,
-        _______, _______, _______, _______, _______,                                      KC_VOLD,    WIN1,    WIN2,    WIN3,    WIN4,
+        _______, _______, _______, _______, _______,                                      KC_VOLD, _______, _______, _______, _______,
                  _______, _______,                                                                          _______, _______,
                                    _______, _______,                                      _______, _______,
                                                      _______, _______,  _______, _______,
                                                      _______, _______,  _______, _______
     ),
 
-/* MACLR - Macro Layer
+/* LMODLR - Left Modifier Layer
  * ,----------------------------------,                             ,----------------------------------,
  * |      |      |      |      |      |                             |      |      |      |      |      |
  * |------+------+------+------+------|                             |-------------+------+------+------|
- * |      |      |      |      |      |                             |      |      |      |      |      |
+ * | CTL  | ALT  | SFT  | GUI  |      |                             |      |      |      |      |      |
  * |------+------+------+------+------|                             |------|------+------+------+------|
- * |      |      |      |      |      |                             |      |      |      |      |      |
+ * |CTLSYM|ALTSYM|SFTSYM|GUISYM|      |                             |      |      |      |      |      |
  * |------+------+------+-------------,                             ,-------------+------+------+------,
  *        |      |      |                                                         |      |      |
  *        '------+------'-------------'                             '-------------'------+------'
  *                      |      |      |                             |      |      |
- *                      |      |LNCHER|                             |      |      |
+ *                      |      |      |                             |      |      |
  *                      |      |      |                             |      |      |
  *                      '------+------'                             '------+------'
  *                                    '------+------' '------+------'
@@ -157,12 +171,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                    |      |      | |      |      |
  *                                    '------+------' '------+------'
  */
-    [_MACLR] = LAYOUT(
+    [_LMODLR] = LAYOUT(
         _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______,
-        _______,  JMPBCK, _______, _______,  JMPFWD,                                      _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______,
+        KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, _______,                                      _______, _______, _______, _______, _______,
+        LCTLSYM, LALTSYM, LSFTSYM, LGUISYM, _______,                                      _______, _______, _______, _______, _______,
                  _______, _______,                                                                          _______, _______,
-                                   _______, LAUNCHER,                                      _______, _______,
+                                   _______, _______,                                      _______, _______,
+                                                     _______, _______,  _______, _______,
+                                                     _______, _______,  _______, _______
+    ),
+/* RMODLR - Right Modifier Layer
+ * ,----------------------------------,                             ,----------------------------------,
+ * |      |      |      |      |      |                             |      |      |      |      |      |
+ * |------+------+------+------+------|                             |-------------+------+------+------|
+ * |      |      |      |      |      |                             |      | GUI  | SFT  | ALT  | CTL  |
+ * |------+------+------+------+------|                             |------|------+------+------+------|
+ * |      |      |      |      |      |                             |      |GUISYM|SFTSYM|ALTSYM|CTLSYM|
+ * |------+------+------+-------------,                             ,-------------+------+------+------,
+ *        |      |      |                                                         |      |      |
+ *        '------+------'-------------'                             '-------------'------+------'
+ *                      |      |      |                             |      |      |
+ *                      |      |      |                             |      |      |
+ *                      |      |      |                             |      |      |
+ *                      '------+------'                             '------+------'
+ *                                    '------+------' '------+------'
+ *                                    |      |      | |      |      |
+ *                                    '------+------' '------+------'
+ *                                    |      |      | |      |      |
+ *                                    '------+------' '------+------'
+ */
+    [_RMODLR] = LAYOUT(
+        _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,                                      _______, KC_RGUI, KC_RSFT, KC_RALT, KC_RCTL,
+        _______, _______, _______, _______, _______,                                      _______, RGUISYM, RSFTSYM, RALTSYM, RCTLSYM,
+                 _______, _______,                                                                          _______, _______,
+                                   _______, _______,                                      _______, _______,
                                                      _______, _______,  _______, _______,
                                                      _______, _______,  _______, _______
     ),
