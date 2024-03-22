@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "keymap_dvorak.h"
+#include "features/achordion.h"
 
 #define _BASE 0
 #define _RAISE 1 // _RAISE
@@ -223,4 +224,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void persistent_default_layer_set(uint16_t default_layer) {
     eeconfig_update_default_layer(default_layer);
     default_layer_set(default_layer);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_achordion(keycode, record)) { return false; }
+  // Your macros ...
+
+  return true;
+}
+
+void matrix_scan_user(void) {
+    achordion_task();
 }
