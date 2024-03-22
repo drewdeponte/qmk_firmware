@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* #define TAPPING_TERM 175 */
+#define TAPPING_TERM 175
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 /* #define IGNORE_MOD_TAP_INTERRUPT */
@@ -43,3 +43,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* #define SPLIT_USB_TIMEOUT 2000 */
 
 /* #define EE_HANDS */
+
+#define PERMISSIVE_HOLD

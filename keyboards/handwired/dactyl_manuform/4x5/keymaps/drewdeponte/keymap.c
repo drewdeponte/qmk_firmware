@@ -39,6 +39,15 @@
 #define LMODLR MO(_LMODLR)
 #define RMODLR MO(_RMODLR)
 
+#define CTLA MT(MOD_LCTL, DV_A)
+#define ALTO MT(MOD_LALT, DV_O)
+#define SFTE MT(MOD_LSFT, DV_E)
+#define CMDU MT(MOD_LGUI, DV_U)
+#define CTLS MT(MOD_RCTL, DV_S)
+#define ALTN MT(MOD_RALT, DV_N)
+#define SFTT MT(MOD_RSFT, DV_T)
+#define CMDH MT(MOD_RGUI, DV_H)
+
 #define LCTLSYM LM(_RAISE, MOD_LCTL)
 #define LALTSYM LM(_RAISE, MOD_LALT)
 #define LSFTSYM LM(_RAISE, MOD_LSFT)
@@ -84,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
     [_BASE] = LAYOUT(
         DV_QUOT, DV_COMM, DV_DOT,  DV_P,    DV_Y,                                         DV_F,    DV_G,    DV_C,    DV_R,    DV_L,
-           DV_A,    DV_O,   DV_E,  DV_U,    DV_I,                                         DV_D,    DV_H,    DV_T,    DV_N,    DV_S,
+           CTLA,    ALTO,   SFTE,  CMDU,    DV_I,                                         DV_D,    CMDH,    SFTT,    ALTN,    CTLS,
         DV_SCLN, DV_Q,    DV_J,    DV_K,    DV_X,                                         DV_B,    DV_M,    DV_W,    DV_V,    DV_Z,
                           DV_LBRC, DV_RBRC,                                                        DV_MINS, DV_EQL,
                                                      SFT_ESC,  KC_SPC,  KC_ENT, SFT_BSPC,
