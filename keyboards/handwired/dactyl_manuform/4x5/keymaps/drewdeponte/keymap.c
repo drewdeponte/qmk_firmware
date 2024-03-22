@@ -93,12 +93,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
     [_BASE] = LAYOUT(
         DV_QUOT, DV_COMM, DV_DOT,  DV_P,    DV_Y,                                         DV_F,    DV_G,    DV_C,    DV_R,    DV_L,
-           CTLA,    ALTO,   SFTE,  CMDU,    DV_I,                                         DV_D,    CMDH,    SFTT,    ALTN,    CTLS,
+           DV_A,    DV_O,   DV_E,  DV_U,    DV_I,                                         DV_D,    DV_H,    DV_T,    DV_N,    DV_S,
         DV_SCLN, DV_Q,    DV_J,    DV_K,    DV_X,                                         DV_B,    DV_M,    DV_W,    DV_V,    DV_Z,
                           DV_LBRC, DV_RBRC,                                                        DV_MINS, DV_EQL,
                                                      SFT_ESC,  KC_SPC,  KC_ENT, SFT_BSPC,
                                                        SYMLR,  MOTLR,   KC_TAB, SYMLR,
-                                                      KC_LCMD, LMODLR,   RMODLR, KC_RCMD
+                                                      KC_LCMD, LMODLR,  RMODLR, KC_RCMD
     ),
 
 /* Raise - SYMLR - Symbol Layer
@@ -224,3 +224,183 @@ void persistent_default_layer_set(uint16_t default_layer) {
     eeconfig_update_default_layer(default_layer);
     default_layer_set(default_layer);
 }
+
+/*
+ * need to add COMBO_ENABLED = yes to rules.mk
+ *
+ * also it is worth noting that I tried KC_LCTL in the combo as the thumb
+ * cluster key, however this created problems with trying to actually create
+ * Ctrl-A combo. So then I tried KC_NO but that created problems where A by
+ * itself was being seen as a Ctrl.
+ *
+ * One thing I didn't try was trying to use KC_F24 for the key in the thumb cluster.
+ * */
+
+/*
+enum combos {
+  LCTL_COMBO,
+  LALT_COMBO,
+  LCMD_COMBO,
+  LCTLALT_COMBO,
+  LALTCMD_COMBO,
+  LCTLALTCMD_COMBO,
+  LCTLSFT_COMBO,
+  LALTSFT_COMBO,
+  LCMDSFT_COMBO,
+  LCTLALTSFT_COMBO,
+  LALTCMDSFT_COMBO,
+  LCTLALTCMDSFT_COMBO,
+  RCTL_COMBO,
+  RALT_COMBO,
+  RCMD_COMBO,
+  RCTLALT_COMBO,
+  RALTCMD_COMBO,
+  RCTLALTCMD_COMBO,
+  RCTLSFT_COMBO,
+  RALTSFT_COMBO,
+  RCMDSFT_COMBO,
+  RCTLALTSFT_COMBO,
+  RALTCMDSFT_COMBO,
+  RCTLALTCMDSFT_COMBO,
+};
+
+const uint16_t PROGMEM ao_combo[] = {DV_A, DV_O, COMBO_END};
+const uint16_t PROGMEM oe_combo[] = {DV_O, DV_E, COMBO_END};
+const uint16_t PROGMEM eu_combo[] = {DV_E, DV_U, COMBO_END};
+
+const uint16_t PROGMEM aoe_combo[] = {DV_A, DV_O, DV_E, COMBO_END};
+const uint16_t PROGMEM oeu_combo[] = {DV_O, DV_E, DV_U, COMBO_END};
+const uint16_t PROGMEM aoeu_combo[] = {DV_A, DV_O, DV_E, DV_U, COMBO_END};
+
+const uint16_t PROGMEM aoSFT_combo[] = {DV_A, DV_O, KC_LSFT, COMBO_END};
+const uint16_t PROGMEM oeSFT_combo[] = {DV_O, DV_E, KC_LSFT, COMBO_END};
+const uint16_t PROGMEM euSFT_combo[] = {DV_E, DV_U, KC_LSFT, COMBO_END};
+
+const uint16_t PROGMEM aoeSFT_combo[] = {DV_A, DV_O, DV_E, KC_LSFT, COMBO_END};
+const uint16_t PROGMEM oeuSFT_combo[] = {DV_O, DV_E, DV_U, KC_LSFT, COMBO_END};
+const uint16_t PROGMEM aoeuSFT_combo[] = {DV_A, DV_O, DV_E, DV_U, KC_LSFT, COMBO_END};
+
+const uint16_t PROGMEM sn_combo[] = {DV_S, DV_N, COMBO_END};
+const uint16_t PROGMEM nt_combo[] = {DV_N, DV_T, COMBO_END};
+const uint16_t PROGMEM th_combo[] = {DV_T, DV_H, COMBO_END};
+
+const uint16_t PROGMEM snt_combo[] = {DV_S, DV_N, DV_T, COMBO_END};
+const uint16_t PROGMEM nth_combo[] = {DV_N, DV_T, DV_H, COMBO_END};
+const uint16_t PROGMEM snth_combo[] = {DV_S, DV_N, DV_T, DV_H, COMBO_END};
+
+const uint16_t PROGMEM snSFT_combo[] = {DV_S, DV_N, KC_RSFT, COMBO_END};
+const uint16_t PROGMEM ntSFT_combo[] = {DV_N, DV_T, KC_RSFT, COMBO_END};
+const uint16_t PROGMEM thSFT_combo[] = {DV_T, DV_H, KC_RSFT, COMBO_END};
+
+const uint16_t PROGMEM sntSFT_combo[] = {DV_S, DV_N, DV_T, KC_RSFT, COMBO_END};
+const uint16_t PROGMEM nthSFT_combo[] = {DV_N, DV_T, DV_H, KC_RSFT, COMBO_END};
+const uint16_t PROGMEM snthSFT_combo[] = {DV_S, DV_N, DV_T, DV_H, KC_RSFT, COMBO_END};
+
+
+combo_t key_combos[] = {
+  [LCTL_COMBO] = COMBO(ao_combo, KC_LCTL),
+  [LALT_COMBO] = COMBO(oe_combo, KC_LALT),
+  [LCMD_COMBO] = COMBO(eu_combo, KC_LCMD),
+  [LCTLALT_COMBO] = COMBO(aoe_combo, LCTL(KC_LALT)),
+  [LALTCMD_COMBO] = COMBO(oeu_combo, LCMD(KC_LALT)),
+  [LCTLALTCMD_COMBO] = COMBO(aoeu_combo, LCMD(LCTL(KC_LALT))),
+
+  [LCTLSFT_COMBO] = COMBO(aoSFT_combo, LSFT(KC_LCTL)),
+  [LALTSFT_COMBO] = COMBO(oeSFT_combo, LSFT(KC_LALT)),
+  [LCMDSFT_COMBO] = COMBO(euSFT_combo, LSFT(KC_LCMD)),
+  [LCTLALTSFT_COMBO] = COMBO(aoeSFT_combo, LSFT(LCTL(KC_LALT))),
+  [LALTCMDSFT_COMBO] = COMBO(oeuSFT_combo, LSFT(LCMD(KC_LALT))),
+  [LCTLALTCMDSFT_COMBO] = COMBO(aoeuSFT_combo, LSFT(LCMD(LCTL(KC_LALT)))),
+
+  [RCTL_COMBO] = COMBO(sn_combo, KC_RCTL),
+  [RALT_COMBO] = COMBO(nt_combo, KC_RALT),
+  [RCMD_COMBO] = COMBO(th_combo, KC_RCMD),
+  [RCTLALT_COMBO] = COMBO(snt_combo, RCTL(KC_RALT)),
+  [RALTCMD_COMBO] = COMBO(nth_combo, RCMD(KC_RALT)),
+  [RCTLALTCMD_COMBO] = COMBO(snth_combo, RCMD(RCTL(KC_RALT))),
+
+  [RCTLSFT_COMBO] = COMBO(snSFT_combo, RSFT(KC_RCTL)),
+  [RALTSFT_COMBO] = COMBO(ntSFT_combo, RSFT(KC_RALT)),
+  [RCMDSFT_COMBO] = COMBO(thSFT_combo, RSFT(KC_RCMD)),
+  [RCTLALTSFT_COMBO] = COMBO(sntSFT_combo, RSFT(RCTL(KC_RALT))),
+  [RALTCMDSFT_COMBO] = COMBO(nthSFT_combo, RSFT(RCMD(KC_RALT))),
+  [RCTLALTCMDSFT_COMBO] = COMBO(snthSFT_combo, RSFT(RCMD(RCTL(KC_RALT))))
+};
+*/
+
+
+/* enum combos { */
+  /* LCTL_COMBO, */
+  /* LALT_COMBO, */
+  /* LSFT_COMBO, */
+  /* LCMD_COMBO, */
+  /* LCTLALT_COMBO, */
+  /* LALTCMD_COMBO, */
+  /* LCTLALTCMD_COMBO, */
+  /* LCTLSFT_COMBO, */
+  /* LALTSFT_COMBO, */
+  /* LCMDSFT_COMBO, */
+  /* LCTLALTSFT_COMBO, */
+  /* LALTCMDSFT_COMBO, */
+  /* LCTLALTCMDSFT_COMBO, */
+  /* RCTL_COMBO, */
+  /* RALT_COMBO, */
+  /* RCMD_COMBO, */
+  /* RCTLALT_COMBO, */
+  /* RALTCMD_COMBO, */
+  /* RCTLALTCMD_COMBO, */
+  /* RCTLSFT_COMBO, */
+  /* RALTSFT_COMBO, */
+  /* RCMDSFT_COMBO, */
+  /* RCTLALTSFT_COMBO, */
+  /* RALTCMDSFT_COMBO, */
+  /* RCTLALTCMDSFT_COMBO, */
+/* }; */
+
+/*
+const uint16_t PROGMEM aNO_combo[] = {DV_A, KC_NO, COMBO_END};
+const uint16_t PROGMEM oNO_combo[] = {DV_O, KC_NO, COMBO_END};
+const uint16_t PROGMEM eNO_combo[] = {DV_E, KC_NO, COMBO_END};
+const uint16_t PROGMEM uNO_combo[] = {DV_U, KC_NO, COMBO_END};
+const uint16_t PROGMEM aoNO_combo[] = {DV_A, DV_O, KC_LCTL, COMBO_END};
+const uint16_t PROGMEM aeNO_combo[] = {DV_A, DV_E, KC_LCTL, COMBO_END};
+const uint16_t PROGMEM auNO_combo[] = {DV_A, DV_U, KC_LCTL, COMBO_END};
+const uint16_t PROGMEM aoeNO_combo[] = {DV_A, DV_O, DV_E, KC_LCTL, COMBO_END};
+const uint16_t PROGMEM aoeuNO_combo[] = {DV_A, DV_O, DV_E, DV_U, KC_LCTL, COMBO_END};
+*/
+
+/* const uint16_t PROGMEM aoe_combo[] = {DV_A, DV_O, DV_E, COMBO_END}; */
+/* const uint16_t PROGMEM oeu_combo[] = {DV_O, DV_E, DV_U, COMBO_END}; */
+/* const uint16_t PROGMEM aoeu_combo[] = {DV_A, DV_O, DV_E, DV_U, COMBO_END}; */
+
+/* const uint16_t PROGMEM aoSFT_combo[] = {DV_A, DV_O, KC_LSFT, COMBO_END}; */
+/* const uint16_t PROGMEM oeSFT_combo[] = {DV_O, DV_E, KC_LSFT, COMBO_END}; */
+/* const uint16_t PROGMEM euSFT_combo[] = {DV_E, DV_U, KC_LSFT, COMBO_END}; */
+
+/* const uint16_t PROGMEM aoeSFT_combo[] = {DV_A, DV_O, DV_E, KC_LSFT, COMBO_END}; */
+/* const uint16_t PROGMEM oeuSFT_combo[] = {DV_O, DV_E, DV_U, KC_LSFT, COMBO_END}; */
+/* const uint16_t PROGMEM aoeuSFT_combo[] = {DV_A, DV_O, DV_E, DV_U, KC_LSFT, COMBO_END}; */
+
+/* const uint16_t PROGMEM sn_combo[] = {DV_S, DV_N, COMBO_END}; */
+/* const uint16_t PROGMEM nt_combo[] = {DV_N, DV_T, COMBO_END}; */
+/* const uint16_t PROGMEM th_combo[] = {DV_T, DV_H, COMBO_END}; */
+
+/* const uint16_t PROGMEM snt_combo[] = {DV_S, DV_N, DV_T, COMBO_END}; */
+/* const uint16_t PROGMEM nth_combo[] = {DV_N, DV_T, DV_H, COMBO_END}; */
+/* const uint16_t PROGMEM snth_combo[] = {DV_S, DV_N, DV_T, DV_H, COMBO_END}; */
+
+/* const uint16_t PROGMEM snSFT_combo[] = {DV_S, DV_N, KC_RSFT, COMBO_END}; */
+/* const uint16_t PROGMEM ntSFT_combo[] = {DV_N, DV_T, KC_RSFT, COMBO_END}; */
+/* const uint16_t PROGMEM thSFT_combo[] = {DV_T, DV_H, KC_RSFT, COMBO_END}; */
+
+/* const uint16_t PROGMEM sntSFT_combo[] = {DV_S, DV_N, DV_T, KC_RSFT, COMBO_END}; */
+/* const uint16_t PROGMEM nthSFT_combo[] = {DV_N, DV_T, DV_H, KC_RSFT, COMBO_END}; */
+/* const uint16_t PROGMEM snthSFT_combo[] = {DV_S, DV_N, DV_T, DV_H, KC_RSFT, COMBO_END}; */
+
+
+/* combo_t key_combos[] = { */
+/*   [LCTL_COMBO] = COMBO(aNO_combo, KC_LCTL), */
+/*   [LALT_COMBO] = COMBO(oNO_combo, KC_LALT), */
+/*   [LSFT_COMBO] = COMBO(eNO_combo, KC_LSFT), */
+/*   [LCMD_COMBO] = COMBO(uNO_combo, KC_LCMD), */
+/* }; */
